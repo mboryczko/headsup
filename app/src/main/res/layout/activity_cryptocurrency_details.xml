@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.details.CryptocurrencyDetailsActivity">
+
+
+        <View
+            android:id="@+id/symbolBackgroundLabel"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/colorPrimaryDark" />
+
+
+        <View
+            android:id="@+id/priceBackgroundLabel"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/symbolBackgroundLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/color3" />
+
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/symbolTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/baseCurrencyImage"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ada"
+                android:layout_width="@dimen/crypto_image_view_size"
+                android:layout_height="@dimen/crypto_image_view_size" />
+
+            <ImageView
+                android:id="@+id/quoteCurrencyImage"
+                android:layout_marginLeft="8dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/lsk"
+                android:layout_width="@dimen/crypto_image_view_size"
+                android:layout_height="@dimen/crypto_image_view_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/symbolTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="BTC/USDT"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/symbolBackgroundLabel"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/priceTextView"
+            tools:text="1142 $"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@+id/priceBackgroundLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/priceBackgroundLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/priceIndicator"
+            tools:src="@drawable/ic_arrow_drop_up_green_24dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@+id/priceBackgroundLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/priceBackgroundLabel"
+            app:layout_constraintLeft_toRightOf="@+id/priceTextView"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+        <pl.michalboryczko.exercise.ui.details.DescriptionItemView
+            android:id="@+id/timeDescriptionItemView"
+            app:layout_constraintTop_toBottomOf="@+id/priceBackgroundLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:descriptionImageView="@drawable/ic_access_time_black_24dp"
+            app:descriptionInfoTextView="@string/timeDescriptionTextView"
+            tools:descriptionTextView="12:24:34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <pl.michalboryczko.exercise.ui.details.DescriptionItemView
+            android:id="@+id/volumeDescriptionItemView"
+            app:layout_constraintTop_toBottomOf="@+id/timeDescriptionItemView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:descriptionImageView="@drawable/ic_whatshot_black_24dp"
+            app:descriptionInfoTextView="@string/volumeDescriptionTextView"
+            tools:descriptionTextView="99999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <pl.michalboryczko.exercise.ui.details.DescriptionItemView
+            android:id="@+id/lowDescriptionItemView"
+            app:layout_constraintTop_toBottomOf="@+id/volumeDescriptionItemView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:descriptionImageView="@drawable/ic_arrow_drop_down_red_24dp"
+            app:descriptionInfoTextView="@string/lowestPriceDescriptionTextView"
+            tools:descriptionTextView="341411"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <pl.michalboryczko.exercise.ui.details.DescriptionItemView
+            android:id="@+id/highDescriptionItemView"
+            app:layout_constraintTop_toBottomOf="@+id/lowDescriptionItemView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:descriptionImageView="@drawable/ic_arrow_drop_up_green_24dp"
+            app:descriptionInfoTextView="@string/highestPriceDescriptionTextView"
+            tools:descriptionTextView="15154154"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+
+        <TextView
+            android:id="@+id/permanentErrorTextView"
+            android:layout_margin="16dp"
+            tools:text="Permanent error"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

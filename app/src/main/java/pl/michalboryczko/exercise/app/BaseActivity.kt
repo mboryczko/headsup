@@ -1,42 +1,64 @@
 package pl.michalboryczko.exercise.app
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-open abstract class BaseActivity<T: BaseViewModel>  : DaggerAppCompatActivity() {
+abstract class BaseActivity<T: BaseViewModel>  : DaggerAppCompatActivity() {
 
     @Inject lateinit var  viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var navigator: Navigator
 
-
     lateinit var viewModel : T
-
 
     inline fun <reified T: BaseViewModel> getGenericViewModel(): T {
         return ViewModelProviders.of(this, viewModelFactory).get(T::class.java)
     }
 
-    fun showToastMessage(msg: String, isLong: Boolean = true){
-        Toast.makeText(this, msg,
-                if(isLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
-                .show()
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-        viewModel.toastInfo.observe(this, Observer{ showToastMessage(it!!)})
+        lifecycle.addObserver(viewModel)
+        observeToastMessage()
     }
 
     abstract fun initViewModel()
+
+    fun observeToastMessage(){
+        viewModel.toastInfo.observe(this, Observer {
+            it?.let { msg ->
+                Toast.makeText(this, msg.getContentIfNotHandled(), Toast.LENGTH_LONG).show()
+            }
+        })
+
+        viewModel.toastInfoResource.observe(this, Observer {
+            it?.let { msg ->
+                val res = msg.getContentIfNotHandled()
+                if(res != null)
+                    Toast.makeText(this, getString(res), Toast.LENGTH_LONG).show()
+
+            }
+        })
+
+    }
+
+    fun hideViews(vararg t: View)
+        = t.iterator().forEach { it.visibility = View.GONE }
+
+    fun showViews(vararg  t: View)
+        = t.iterator().forEach { it.visibility = View.VISIBLE }
+
+    fun showSnackbar(res: Int){
+        Snackbar.make(window.decorView.rootView, res, Snackbar.LENGTH_LONG).show()
+    }
 
 }

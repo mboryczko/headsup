@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import pl.michalboryczko.exercise.app.MainApplication
 import pl.michalboryczko.exercise.app.Navigator
+import pl.michalboryczko.exercise.ui.register.UserValidator
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -23,13 +24,13 @@ class AppModule{
 
 
     @Provides
-    @Named("SubscribeScheduler")
+    @Named("computationScheduler")
     fun provideSubscribeScheduler(): Scheduler{
         return Schedulers.computation()
     }
 
     @Provides
-    @Named("ObserveOnScheduler")
+    @Named("mainScheduler")
     fun provideObserveOnScheduler(): Scheduler{
         return AndroidSchedulers.mainThread()
     }
@@ -38,6 +39,11 @@ class AppModule{
     fun provideNavigator(): Navigator{
         return Navigator()
     }
+
+    /*@Provides
+    fun provideUserValidator(): UserValidator{
+        return UserValidator()
+    }*/
 
     @Provides
     @Singleton

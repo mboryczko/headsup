@@ -1,16 +1,37 @@
 package pl.michalboryczko.exercise.app
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.Disposable
+import pl.michalboryczko.exercise.model.base.Event
+import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
 
-open abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel(
+        internetConnectivityChecker: InternetConnectivityChecker
+): ViewModel(), LifecycleObserver {
 
 
-    val toastInfo: MutableLiveData<String> = MutableLiveData()
+    val toastInfo: MutableLiveData<Event<String>> = MutableLiveData()
+    val toastInfoResource: MutableLiveData<Event<Int>> = MutableLiveData()
+    protected val disposables :MutableList<Disposable> = mutableListOf()
+    val internetConnectivity: MutableLiveData<Boolean> = MutableLiveData()
 
-    abstract fun onStop()
-    abstract fun onResume()
+    init {
+        disposables.add(
+                internetConnectivityChecker
+                        .isInternetAvailableObservable()
+                        .subscribe{ internetConnectivity.value = it }
+        )
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables
+                .filter { it.isDisposed }
+                .forEach { it.dispose() }
+    }
 
 
 }

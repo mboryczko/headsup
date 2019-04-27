@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@color/color2"
+    android:id="@+id/wholeRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/pairTextView"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        tools:text="BTC/USDT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/lastPriceTextView"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:layout_toRightOf="@+id/pairTextView"
+        tools:text="3956,19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/volumeTextView"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:layout_toRightOf="@+id/lastPriceTextView"
+        tools:text="42621146"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

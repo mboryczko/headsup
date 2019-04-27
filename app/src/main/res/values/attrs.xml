@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DescriptionItemView">
+        <attr name="descriptionImageView" format="reference"/>
+        <attr name="descriptionInfoTextView" format="string"/>
+        <attr name="descriptionTextView" format="string"/>
+    </declare-styleable>
+
+</resources>

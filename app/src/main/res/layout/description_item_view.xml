@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layout_margin="8dp"
+    tools:background="@color/color1"
+    tools:context=".ui.details.CryptocurrencyDetailsActivity">
+
+
+    <ImageView
+        android:id="@+id/descriptionImageView"
+        android:src="@drawable/ic_arrow_drop_up_green_24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+
+    <TextView
+        android:id="@+id/descriptionInfoTextView"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/descriptionImageView"
+        app:layout_constraintTop_toTopOf="@+id/descriptionImageView"
+        tools:text="@string/timeDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <View
+        android:id="@+id/dividerView"
+        android:background="@color/black"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/descriptionImageView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionInfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="1px" />
+
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        tools:text="@string/timeDescriptionTextView"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/descriptionImageView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

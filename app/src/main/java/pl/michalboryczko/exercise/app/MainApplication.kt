@@ -1,6 +1,7 @@
 package pl.michalboryczko.exercise.app
 
-import android.support.multidex.MultiDex
+import androidx.multidex.MultiDex
+import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import pl.michalboryczko.exercise.di.DaggerAppComponent
@@ -13,6 +14,7 @@ class MainApplication: DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(this)
+        FirebaseApp.initializeApp(this)
         Timber.plant(Timber.DebugTree())
     }
 
