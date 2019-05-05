@@ -11,11 +11,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.michalboryczko.exercise.source.api.rest.Api
-import pl.michalboryczko.exercise.source.api.rest.RestApiService
 import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
 import pl.michalboryczko.exercise.source.api.firebase.FirebaseApiService
 import pl.michalboryczko.exercise.source.api.firebase.FirestoreApiService
-import pl.michalboryczko.exercise.source.api.websocket.WebSocketApiService
 import java.util.concurrent.TimeUnit
 
 
@@ -81,26 +79,13 @@ class NetworkModule {
     }
 
     @Provides
-    fun apiService(context: Context, api: Api): RestApiService {
-        return RestApiService(context, api)
-    }
-
-    @Provides
     fun firebaseService(): FirebaseApiService {
         return FirebaseApiService()
     }
-
-
 
     @Provides
     fun firestoreService(): FirestoreApiService {
         return FirestoreApiService()
     }
-
-    @Provides
-    fun webSocketApiService(okHttpClient: OkHttpClient): WebSocketApiService {
-        return WebSocketApiService(webSocketEndpoint, okHttpClient)
-    }
-
 
 }

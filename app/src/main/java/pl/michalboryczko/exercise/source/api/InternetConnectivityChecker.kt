@@ -21,7 +21,7 @@ class InternetConnectivityChecker
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         val isConnection = activeNetwork?.isConnectedOrConnecting == true
-        Timber.d("internet check $isConnection")
+        //Timber.d("internet check $isConnection")
         return isConnection
     }
 
@@ -32,7 +32,7 @@ class InternetConnectivityChecker
                 .map {
                     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                     val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-                    Timber.d("isInternet: ${activeNetwork?.isConnectedOrConnecting == true }")
+                    //Timber.d("isInternet: ${activeNetwork?.isConnectedOrConnecting == true }")
                     activeNetwork?.isConnectedOrConnecting == true
                 }
     }

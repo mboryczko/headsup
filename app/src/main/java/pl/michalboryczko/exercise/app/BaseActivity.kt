@@ -1,5 +1,6 @@
 package pl.michalboryczko.exercise.app
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -8,12 +9,13 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 
 abstract class BaseActivity<T: BaseViewModel>  : DaggerAppCompatActivity() {
 
-    @Inject lateinit var  viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var navigator: Navigator
@@ -33,6 +35,16 @@ abstract class BaseActivity<T: BaseViewModel>  : DaggerAppCompatActivity() {
 
     abstract fun initViewModel()
 
+    fun observeUserLoginStatus(){
+        viewModel.loggedInStatus.observe(this, Observer {
+            it?.let { isLoggedIn ->
+                if(!isLoggedIn){
+                    navigator.navigateToLoginActivity(this)
+                }
+            }
+        })
+    }
+
     fun observeToastMessage(){
         viewModel.toastInfo.observe(this, Observer {
             it?.let { msg ->
@@ -51,11 +63,29 @@ abstract class BaseActivity<T: BaseViewModel>  : DaggerAppCompatActivity() {
 
     }
 
+    fun enableViews(vararg t: View)
+        = t.iterator().forEach { it.isEnabled = true }
+
+    fun disableViews(vararg t: View)
+            = t.iterator().forEach { it.isEnabled = false }
+
     fun hideViews(vararg t: View)
         = t.iterator().forEach { it.visibility = View.GONE }
 
     fun showViews(vararg  t: View)
         = t.iterator().forEach { it.visibility = View.VISIBLE }
+
+    fun showToast(context: Context, res: String){
+        Toast.makeText(context, res, Toast.LENGTH_LONG).show()
+    }
+
+    fun showToast(context: Context, res: Int){
+        Toast.makeText(context, res, Toast.LENGTH_LONG).show()
+    }
+
+    fun showSnackbar(res: String){
+        Snackbar.make(window.decorView.rootView, res, Snackbar.LENGTH_LONG).show()
+    }
 
     fun showSnackbar(res: Int){
         Snackbar.make(window.decorView.rootView, res, Snackbar.LENGTH_LONG).show()

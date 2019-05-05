@@ -1,14 +1,20 @@
 package pl.michalboryczko.exercise.source.repository
 
 
+import com.google.firebase.firestore.FirebaseFirestoreException
 import io.reactivex.*
+import org.intellij.lang.annotations.Flow
 import pl.michalboryczko.exercise.model.exceptions.ApiException
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
+import pl.michalboryczko.exercise.model.exceptions.UnathorizedException
 import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
+import timber.log.Timber
 
 open class NetworkRepository(
         private val checker: InternetConnectivityChecker
 ) {
+
+    private val PERMISSION_DENIED = "PERMISSION_DENIED"
 
     protected fun <T> handleNetworkConnection(): SingleTransformer<T, T> = SingleTransformer {
         it.flatMap {
@@ -27,8 +33,13 @@ open class NetworkRepository(
                 return@onErrorResumeNext Single.error(NoInternetException())
             }
 
-            return@onErrorResumeNext Single.error(
-                    ApiException(t.localizedMessage ?: "Unknown error occurred"))
+            if (t is FirebaseFirestoreException && t.code.name == PERMISSION_DENIED) {
+                Timber.d("unathorized exception cought")
+                return@onErrorResumeNext Single.error(UnathorizedException())
+            }
+
+            Timber.d("different error cought %s", t.localizedMessage)
+            return@onErrorResumeNext Single.error(t)
         }
     }
 
@@ -50,7 +61,14 @@ open class NetworkRepository(
                     return@onErrorResumeNext Flowable.error(NoInternetException())
                 }
 
-                return@onErrorResumeNext Flowable.error( ApiException(t.localizedMessage ?: "Unknown error occurred"))
+                if (t is FirebaseFirestoreException && t.code.name == PERMISSION_DENIED) {
+                    Timber.d("unathorized exception cought")
+                    return@onErrorResumeNext Flowable.error(UnathorizedException())
+                }
+
+
+                Timber.d("different error cought %s", t.localizedMessage)
+                return@onErrorResumeNext Flowable.error(t)
             }
         }
     }

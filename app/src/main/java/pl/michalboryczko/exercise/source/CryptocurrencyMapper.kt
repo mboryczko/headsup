@@ -2,13 +2,12 @@ package pl.michalboryczko.exercise.source
 
 import pl.michalboryczko.exercise.model.CryptocurrencyPair
 import pl.michalboryczko.exercise.model.CryptocurrencyPairSimple
-import pl.michalboryczko.exercise.model.api.CurrencyPairResponse
 import pl.michalboryczko.exercise.model.api.CurrencyTickerResponse
 
 class CryptocurrencyMapper{
 
 
-    private val baseCryptoUrl = "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/color/"
+   /* private val baseCryptoUrl = "https://raw.githubusercontent.com/atomiclabs/cryptocurrency-icons/master/128/color/"
 
     fun mergeCryptocurrencyPairAndTicker(
             pair: CurrencyPairResponse,
@@ -35,5 +34,5 @@ class CryptocurrencyMapper{
 
 
     fun createPairStringSlashSeparated(pair: CryptocurrencyPairSimple)
-        = "${pair.baseCurrency}/${pair.quoteCurrency}"
+        = "${pair.baseCurrency}/${pair.quoteCurrency}"*/
 }

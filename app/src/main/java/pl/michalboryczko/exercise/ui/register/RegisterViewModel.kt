@@ -22,7 +22,7 @@ class RegisterViewModel
         private val checker: InternetConnectivityChecker,
         @Named("computationScheduler") private val computationScheduler: Scheduler,
         @Named("mainScheduler") private val mainScheduler: Scheduler
-) : BaseViewModel(checker) {
+) : BaseViewModel(checker, userRepository) {
 
     val status: MutableLiveData<Resource<Int>> = MutableLiveData()
     var userValidator: UserValidator

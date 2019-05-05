@@ -12,11 +12,15 @@
 
     <!--menu-->
     <string name="login_button">Login</string>
+    <string name="create_session">Create session</string>
+    <string name="join_session">Join session</string>
 
 
     <!--errors -->
     <string name="unknown_error">Unexpected error has occurred</string>
     <string name="no_internet">No internet connected</string>
+    <string name="unathorized_error">Session ended</string>
+    <string name="wrong_password">Wrong password</string>
 
     <!--register-->
     <string name="email_hint">E-mail</string>
@@ -35,4 +39,6 @@
     <string name="login_empty">Login should not be empty</string>
     <string name="password_empty">Password should not be empty</string>
     <string name="login_successful">Logged in successfully</string>
+    <string name="register_prompt">Don\'t have an account? </string>
+    <string name="register_here">Register here.</string>
 </resources>

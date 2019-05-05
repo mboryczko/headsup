@@ -59,7 +59,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
     private fun showError(errorMsg: String){
         showViews()
         hideViews(progressBar)
-
+        showToast(this, errorMsg)
         //permanentErrorTextView.text = errorMsg
     }
 

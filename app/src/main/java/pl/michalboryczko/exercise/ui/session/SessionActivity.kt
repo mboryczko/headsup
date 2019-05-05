@@ -3,12 +3,11 @@ package pl.michalboryczko.exercise.ui.session
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_session.*
 import pl.michalboryczko.exercise.R
 import pl.michalboryczko.exercise.app.BaseActivity
-import pl.michalboryczko.exercise.model.api.Estimation
-import pl.michalboryczko.exercise.model.api.Session
-import pl.michalboryczko.exercise.model.api.Story
+import pl.michalboryczko.exercise.model.base.Status
 
 class SessionActivity : BaseActivity<SessionViewModel>() {
 
@@ -20,32 +19,46 @@ class SessionActivity : BaseActivity<SessionViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_session)
 
-        sessionButton.setOnClickListener {
-            viewModel.saveSessionClicked(
-                    Session(
-                            sessionIdEditText.text.toString(),
-                            sessionNameEditText.text.toString(),
-                            "haslo123" ))
+        createSessionButton.setOnClickListener {
+            viewModel.createSession(sessionNameEditText.text.toString(), sessionPassword.text.toString())
         }
 
-        storyButton.setOnClickListener {
-            viewModel.saveStoryClicked(
-                    Story(
-                            storyIdEditText.text.toString(),
-                            sessionIdEditText.text.toString(),
-                            storyEditText.text.toString(),
-                            storyDescEditText.text.toString(),
-                            null))
+        joinSessionButton.setOnClickListener {
+            viewModel.joinSession(joinSessionIdText.text.toString(), joinSessionPassword.text.toString())
         }
 
-        estimationButton.setOnClickListener {
-            viewModel.saveEstimationClicked(
-                    Estimation(
-                            storyIdEditText.text.toString(),
-                            estimationPointsEditText.text.toString().toInt(),
-                            userIdEditText.text.toString()))
+        logoutButton.setOnClickListener {
+            viewModel.logout()
         }
 
+        observeUserLoginStatus()
+
+        viewModel.session.observe(this, Observer {
+            it?.let { r ->
+                when(r.status){
+                    Status.INITIAL -> initial()
+                    Status.LOADING -> showLoading()
+                    Status.ERROR -> {hideViews(progressBar)}
+                    Status.ERROR_ID -> {hideViews(progressBar)}
+                    Status.SUCCESS -> {
+                        val session = r.data
+                        if(session != null){
+                            navigator.navigateToActiveSessionActivity(this, session)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    fun initial(){
+        enableViews(createSessionButton, joinSessionButton)
+        hideViews(progressBar)
+    }
+
+    fun showLoading(){
+        disableViews(createSessionButton, joinSessionButton)
+        showViews(progressBar)
     }
 
     override fun initViewModel() {

@@ -21,40 +21,56 @@ class LoginActivity : BaseActivity<LoginViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        emailEditText.setText("a@b.pl")
+        passwordEditText.setText("testtest1")
+
         loginButton.setOnClickListener { viewModel.loginClicked(
                 LoginCall(
                         emailEditText.text.toString(),
                         passwordEditText.text.toString())
         )}
 
+        registerHereTextView.setOnClickListener{
+            navigator.navigateToRegisterActivity(this)
+        }
+
         viewModel.status.observe(this, Observer {
             it?.let { r ->
                 when(r.status){
-                    Status.INITIAL -> {}
+                    Status.INITIAL -> showInitial()
                     Status.LOADING -> showLoading()
                     Status.ERROR -> showError(r.message)
                     Status.ERROR_ID -> showError(r.resourceIdMessage)
-                    Status.SUCCESS -> { showSnackbar(R.string.login_successful) }
+                    Status.SUCCESS -> { navigator.navigateToCreateSessionActivity(this) }
                 }
             }
         })
     }
 
+    private fun showInitial(){
+        showViews()
+        hideViews(progressBar)
+        enableViews(loginButton)
+    }
+
     private fun showLoading(){
         showViews(progressBar)
         hideViews()
+        disableViews(loginButton)
     }
 
     private fun showError(errorMsg: String){
         showViews()
         hideViews(progressBar)
-        //permanentErrorTextView.text = errorMsg
+        showToast(this, errorMsg)
+        enableViews(loginButton)
     }
 
     private fun showError(error: Int){
         showViews()
         hideViews(progressBar)
-        showSnackbar(error)
+        showToast(this, error)
+        enableViews(loginButton)
     }
 
     override fun initViewModel() {

@@ -1,21 +1,33 @@
 package pl.michalboryczko.exercise.app
 
 import android.app.Activity
-import pl.michalboryczko.exercise.model.CryptocurrencyPairSimple
-import pl.michalboryczko.exercise.ui.details.CryptocurrencyDetailsActivity
-import pl.michalboryczko.exercise.ui.login.LoginActivity
+import pl.michalboryczko.exercise.model.api.Session
+import pl.michalboryczko.exercise.ui.activesession.ActiveSessionActivity
 import pl.michalboryczko.exercise.ui.session.SessionActivity
+import pl.michalboryczko.exercise.ui.login.LoginActivity
+import pl.michalboryczko.exercise.ui.register.RegisterActivity
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Singleton
 class Navigator {
-    fun navigateToCryptocurrencyDetailsActivity(activity: Activity, pair: CryptocurrencyPairSimple)
-            = activity.apply { startActivity(CryptocurrencyDetailsActivity.prepareIntent(activity, pair)) }
 
-    fun navigateToLoginActivity(activity: Activity)
-            = activity.apply { startActivity(LoginActivity.prepareIntent(activity)) }
+    fun navigateToLoginActivity(activity: Activity){
+        Timber.d("navigate to login activity called")
+        activity.apply { startActivity(LoginActivity.prepareIntent(activity)) }
+    }
+
+    fun navigateToRegisterActivity(activity: Activity)
+            = activity.apply { startActivity(RegisterActivity.prepareIntent(activity)) }
 
 
-    fun navigateToSessionActivity(activity: Activity)
+    fun navigateToActiveSessionActivity(activity: Activity, session: Session)
+            = activity.apply { startActivity(ActiveSessionActivity.prepareIntent(activity, session)) }
+
+    fun navigateToCreateSessionActivity(activity: Activity)
+            = activity.apply { startActivity(SessionActivity.prepareIntent(activity)) }
+
+
+    fun navigateToAttendSessionActivity(activity: Activity)
             = activity.apply { startActivity(SessionActivity.prepareIntent(activity)) }
 }

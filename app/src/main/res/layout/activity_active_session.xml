@@ -4,36 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.sessionold.SessionOldActivity">
+    android:orientation="vertical">
+
+
+
+
+    <TextView
+        android:id="@+id/activeSession"
+        android:textSize="16sp"
+        android:text="active session title"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/activeStory"
+        android:textSize="16sp"
+        android:text="active story title"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/activeStoryDescription"
+        android:textSize="16sp"
+        android:text="active story description"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/estimationsRecyclerView"
+        tools:listitem="@layout/estimation_item"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
 
     <LinearLayout
+        android:id="@+id/createStoryLayout"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/sessionNameEditText"
+            android:id="@+id/createStoryName"
             android:hint="id"
-            android:text="ses1"
+            android:text="logowanie"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/sessionPassword"
+            android:id="@+id/createStoryDescription"
             android:hint="@string/password_hint"
-            android:text="123"
-            android:inputType="textPassword"
+            android:text="logowanie opis"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/createSessionButton"
+            android:id="@+id/createStoryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CREATE SESSION" />
+            android:text="CREATE StORY" />
 
     </LinearLayout>
 
@@ -43,27 +76,18 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/joinSessionIdText"
+            android:id="@+id/pointsEstimation"
             android:hint="id"
-            android:text="ses1"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/joinSessionPassword"
-            android:hint="@string/password_hint"
-            android:text="123"
-            android:inputType="textPassword"
+            android:text="5"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/joinSessionButton"
+            android:id="@+id/saveEstimationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JOIN SESSION" />
+            android:text="SAVE ESTIMATION" />
 
     </LinearLayout>
 
@@ -73,24 +97,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:padding="16dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <TextView
-        android:id="@+id/outputTextView"
-        android:text="..."
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-    </TextView>
 
 
 </LinearLayout>

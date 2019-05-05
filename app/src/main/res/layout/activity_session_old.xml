@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.sessionold.SessionOldActivity">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/sessionIdEditText"
+            android:hint="id"
+            android:text="ses1"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/sessionNameEditText"
+            android:hint="name"
+            android:text="sprint1"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/sessionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE SESSION" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/storyIdEditText"
+            android:hint="id"
+            android:text="st1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/storyEditText"
+            android:hint="story"
+            android:text="rejestracja"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+
+        <EditText
+            android:id="@+id/storyDescEditText"
+            android:hint="storyDesc"
+            android:text="rejestracja uzytkownika"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/storyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE STORY" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/userIdEditText"
+            android:text="mich"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/estimationPointsEditText"
+            android:text="8"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/estimationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE ESTIMATION" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/loadStoriesButton"
+            android:text="load stories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/loadEstimationsButton"
+            android:text="load estimations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/outputTextView"
+        android:text="..."
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    </TextView>
+
+
+</LinearLayout>

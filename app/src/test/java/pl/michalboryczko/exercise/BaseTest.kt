@@ -9,8 +9,6 @@ import org.mockito.stubbing.OngoingStubbing
 import pl.michalboryczko.exercise.helper.RandomInputs
 import pl.michalboryczko.exercise.model.CryptocurrencyPairDetails
 import pl.michalboryczko.exercise.model.CryptocurrencyPairSimple
-import pl.michalboryczko.exercise.model.api.CryptocurrencyResponse
-import pl.michalboryczko.exercise.model.api.CurrencyPairResponse
 import pl.michalboryczko.exercise.model.api.CurrencyTickerResponse
 import pl.michalboryczko.exercise.model.api.Params
 import pl.michalboryczko.exercise.model.api.call.LoginCall

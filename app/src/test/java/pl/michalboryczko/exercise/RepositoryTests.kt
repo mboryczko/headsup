@@ -7,23 +7,22 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
-import pl.michalboryczko.exercise.source.api.rest.RestApiService
 import pl.michalboryczko.exercise.source.CryptocurrencyMapper
+import pl.michalboryczko.exercise.source.api.firebase.FirebaseApiService
+import pl.michalboryczko.exercise.source.api.firebase.FirestoreApiService
 import pl.michalboryczko.exercise.source.repository.RepositoryImpl
 import pl.michalboryczko.exercise.source.api.websocket.WebSocketApiService
 
 class RepositoryTests: BaseTest() {
 
 
-    private val restApi = Mockito.mock(RestApiService::class.java)
-    private val webSocketService = Mockito.mock(WebSocketApiService::class.java)
-    private val repo by lazy { RepositoryImpl(restApi, webSocketService, CryptocurrencyMapper(), checker) }
+    private val firestoreApiService = Mockito.mock(FirestoreApiService::class.java)
+    private val firebaseApiService = Mockito.mock(FirebaseApiService::class.java)
+    private val repo by lazy { RepositoryImpl(firebaseApiService, firestoreApiService, checker) }
 
     @Before
     override fun setUp(){
-        whenever(restApi.getCurrencyPairs()).thenReturn(Single.just(listOf(pairResponseMock)))
-        whenever(restApi.getCurrencyTickers()).thenReturn(Single.just(listOf(tickerResponseMock)))
+        whenever(firestoreApiService.getCurrencyPairs()).thenReturn(Single.just(listOf(pairResponseMock)))
     }
 
     @Test

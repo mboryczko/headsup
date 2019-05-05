@@ -1,6 +1,7 @@
 package pl.michalboryczko.exercise.source.api.firebase
 
 import android.util.Log
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -13,6 +14,11 @@ import pl.michalboryczko.exercise.model.api.Session
 import pl.michalboryczko.exercise.model.api.Story
 import pl.michalboryczko.exercise.model.api.call.LoginCall
 import pl.michalboryczko.exercise.model.api.call.UserCall
+import pl.michalboryczko.exercise.model.exceptions.NotFoundException
+import pl.michalboryczko.exercise.model.exceptions.UnathorizedException
+import pl.michalboryczko.exercise.model.exceptions.WrongPasswordException
+import pl.michalboryczko.exercise.model.presentation.User
+import timber.log.Timber
 import java.util.*
 
 
@@ -23,8 +29,17 @@ import java.util.*
 class FirebaseApiService {
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
     private val mDatabase: DatabaseReference by lazy { FirebaseDatabase.getInstance().reference }
+
+    private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+
+    fun logout(): Single<Boolean>{
+        return Single.create{emitter ->
+            auth.signOut()
+            emitter.onSuccess(true)
+            Timber.d("logged out")
+        }
+    }
 
     fun logIn(input: LoginCall): Single<Boolean> {
         return Single
@@ -35,15 +50,64 @@ class FirebaseApiService {
 
                             }
                             .addOnFailureListener{
-                                emitter.onError(Exception("no internet"))
+                                emitter.onError(Exception(it.message))
                             }
                 }
     }
 
-    fun isUserLoggedIn(): Single<Boolean> {
-        return Single.just(auth.currentUser)
-                .map { it != null }
+    fun isUserLoggedIn(): Flowable<Boolean> {
+        return Flowable.create(
+                { emitter ->
+                    emitter.onNext(auth.currentUser != null)
+                }, BackpressureStrategy.BUFFER
+        )
     }
+
+    fun getCurrentUser(): Single<User>{
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            val uid = currentUser.uid
+
+            return Single.create {emitter ->
+                db.collection("users")
+                        .whereEqualTo("id", uid)
+                        .limit(1)
+                        .addSnapshotListener{ value, e ->
+                            if (e != null) {
+//                            emitter.onError(e)
+//                            return@addSnapshotListener
+                            }else{
+                                val users = value!!.toObjects(User::class.java)
+                                if(users.size > 0){
+                                    val user = users.first()
+                                    emitter.onSuccess(user)
+                                }else{
+                                    emitter.onError(NotFoundException())
+                                }
+                            }
+
+                        }
+            }
+        }
+
+
+
+        return Single.error(UnathorizedException())
+    }
+
+
+    fun addUser(user: UserCall, uid: String): Single<User>{
+        val user = User(uid, user.email, user.username)
+        return Single
+                .create { emitter ->
+                    db.collection("users")
+                            .document(uid)
+                            .set(user)
+                            .addOnSuccessListener { emitter.onSuccess(user) }
+                            .addOnFailureListener{ emitter.onError(it)}
+                }
+    }
+
 
     fun createUser(user: UserCall): Single<String> {
         return Single
@@ -71,15 +135,6 @@ class FirebaseApiService {
                             .addOnFailureListener{ emitter.onError(it)}
                 }
 
-
-        /*return Single
-                .create { emitter ->
-                    db.collection("sessions")
-                            .document(sessionId)
-                            .set(session)
-                            .addOnSuccessListener { emitter.onSuccess(true) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }*/
     }
 
     fun saveStory(story: Story, sessionId: String, storyId: String): Single<Boolean> {
@@ -101,20 +156,7 @@ class FirebaseApiService {
                             .addOnSuccessListener { emitter.onSuccess(true) }
                             .addOnFailureListener{ emitter.onError(it)}
                 }
-        /*
 
-        val updateMap = HashMap<String, Any>()
-        updateMap.put("story", story.story)
-        updateMap.put("description", story.description)
-
-        return Single
-                .create { emitter ->
-                    db.collection("sessions")
-                            .document(sessionId)
-                            .update("stories", FieldValue.arrayUnion(updateMap) )
-                            .addOnSuccessListener { emitter.onSuccess(true) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }*/
     }
 
     fun saveEstimation(estimation: Estimation, sessionId: String, storyId: String): Single<Boolean> {
@@ -136,199 +178,6 @@ class FirebaseApiService {
                             .addOnSuccessListener { emitter.onSuccess(true) }
                             .addOnFailureListener{ emitter.onError(it)}
                 }
-
-        /*return Single
-                .create { emitter ->
-                    db.collection("sessions")
-                            .document(sessionId)
-                            .update(
-                                    "stories.$storyId", estimationMap
-                            )
-                            .addOnSuccessListener { emitter.onSuccess(true) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }*/
     }
 
-
-    /*fun findFriendByEmail(email: String): Single<User> {
-        val dbRef = db.collection("users")
-        return Single
-                .create { emitter ->
-                    dbRef
-                            .whereEqualTo("email", email)
-                            .get()
-                            .addOnCompleteListener{ task ->
-                                if (task.isSuccessful) {
-                                    val document = task.result
-                                    document?.let {
-                                        val foundUsers = it.toObjects(User::class.java)
-                                        if(foundUsers.isNotEmpty())
-                                            emitter.onSuccess(foundUsers.first())
-                                        else
-                                            emitter.onError(NoSuchElementException())
-                                    }
-                                } else {
-                                    emitter.onError(Exception("no friend found"))
-                                }
-                            }
-                }
-    }
-
-    fun findFriendByUid(uid: String): Single<User> {
-        val dbRef = db.collection("users")
-        return Single
-                .create { emitter ->
-                    dbRef
-                            .whereEqualTo("storyId", uid)
-                            .get()
-                            .addOnCompleteListener{ task ->
-                                if (task.isSuccessful) {
-                                    val document = task.result
-                                    document?.let {
-                                        val foundUsers = it.toObjects(User::class.java)
-                                        if(foundUsers.isNotEmpty())
-                                            emitter.onSuccess(foundUsers.first())
-                                        else
-                                            emitter.onError(NoSuchElementException())
-                                    }
-                                } else {
-                                    emitter.onError(Exception("no friend found"))
-                                }
-                            }
-                }
-    }
-
-    fun getUserInvitations(): Single<List<Game>> {
-        val currentUid = auth.currentUser?.uid
-        val dbRef = db.collection("games")
-
-        return if(currentUid != null){
-            Single.create { emitter ->
-                dbRef
-                        .whereEqualTo("contestantId", currentUid)
-                        .get()
-                        .addOnCompleteListener{ task ->
-                            if (task.isSuccessful) {
-                                val document = task.result
-                                document?.let {
-                                    val foundGames = it.toObjects(Game::class.java)
-                                    emitter.onSuccess(foundGames)
-                                }
-                            } else {
-                                emitter.onError(Exception("no friend found"))
-                            }
-                        }
-            }
-        } else
-            Single.create { emitter -> emitter.onError(UnauthorizedException())}
-    }
-
-    fun inviteFriendToGame(contestant: UserVisibleData): Single<Boolean> {
-        return getUser()
-                .flatMap { inviteFriendToGame(contestant, it) }
-    }
-
-    private fun inviteFriendToGame(contestant: UserVisibleData, owner: UserVisibleData): Single<Boolean> {
-        val seed = Random().nextLong()
-        return if(contestant != null && owner != null){
-            val ref = db.collection("games").document()
-            val game = Game(ref.storyId, contestant.storyId, owner.storyId, contestant, owner, seed, GameStatus.WAITING_FOR_OPONENT,
-                    0, 0, false, false)
-            Single.create { emitter ->
-                ref.set(game)
-                        .addOnSuccessListener { emitter.onSuccess(true) }
-                        .addOnFailureListener{ emitter.onError(it)}
-            }
-        }else
-            Single.create { emitter -> emitter.onError(UnauthorizedException())}
-    }
-
-    fun getGameObservable(gameId: String): Observable<Oponent> {
-        val ref = db.collection("games").document(gameId)
-        return Observable.create { emitter ->
-            ref.addSnapshotListener{ snapshot, e ->
-                if (e != null) {
-                    //emitter.onError()
-                }
-
-                *//* val source = if (snapshot != null && snapshot.metadata.hasPendingWrites())
-                     "Local"
-                 else
-                     "Server"*//*
-
-                if (snapshot != null && snapshot.exists()) {
-                    val game = snapshot.toObject(Game::class.java)
-                    if(game != null){
-                        val uid = auth.currentUser?.uid
-                        if(uid != null){
-                            val point = if(uid == game.contestantId) game.contestantPoints else game.ownerPoints
-                            val isFinished = if(uid == game.contestantId) game.contestantFinished else game.ownerFinished
-                            val oponent = Oponent(game.seed, point, game.status, isFinished)
-                            emitter.onNext(oponent)
-                        }
-
-                        else
-                            emitter.onError(UnauthorizedException())
-                    }
-
-                } else {
-                    emitter.onError(UnknownError())
-                }
-            }
-        }
-    }
-
-    fun finishContestantGame(gameId: String): Single<Boolean>
-            = finishGame(gameId, "contestantFinished")
-
-    fun finishOwnerGame(gameId: String): Single<Boolean>
-            = finishGame(gameId, "ownerFinished")
-
-    fun saveCurrentContestantScore(gameId: String, score: Int): Single<Boolean>
-            = saveCurrentScore(gameId, score, "contestantPoints")
-
-    fun saveCurrentOwnerScore(gameId: String, score: Int): Single<Boolean>
-            = saveCurrentScore(gameId, score, "ownerPoints")
-
-    private fun finishGame(gameId: String, field: String): Single<Boolean> {
-        val ref = db.collection("games").document(gameId)
-        return Single
-                .create { emitter ->
-                    ref
-                            .update(field, true)
-                            .addOnSuccessListener { emitter.onSuccess(true) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }
-    }
-
-    private fun saveCurrentScore(gameId: String, score: Int, field: String): Single<Boolean> {
-        val ref = db.collection("games").document(gameId)
-        return Single
-                .create { emitter ->
-                    ref
-                            .update(field, score)
-                            .addOnSuccessListener { emitter.onSuccess(true) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }
-    }
-
-    fun getUser(): Single<UserVisibleData> {
-        val currentUser = auth.currentUser
-        return if(currentUser != null){
-            val email = if(currentUser.email != null) currentUser.email!! else ""
-            val username = if(currentUser.displayName != null) currentUser.displayName!! else ""
-            Single.just(UserVisibleData(currentUser.uid, email, username))
-        } else
-            Single.error(NoSuchFieldException())
-    }
-
-    fun saveUserToDatabase(user: User): Single<String> {
-        return Single
-                .create { emitter ->
-                    db.collection("users")
-                            .add(user)
-                            .addOnSuccessListener { emitter.onSuccess(user.storyId) }
-                            .addOnFailureListener{ emitter.onError(it)}
-                }
-    }*/
 }
