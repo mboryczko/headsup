@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ScrumPoker.iml" filepath="$PROJECT_DIR$/ScrumPoker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BaseProject.iml" filepath="$PROJECT_DIR$/BaseProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="heads up/app" />
+      <module fileurl="file://$PROJECT_DIR$/heads up.iml" filepath="$PROJECT_DIR$/heads up.iml" group="heads up" />
     </modules>
   </component>
 </project>

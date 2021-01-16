@@ -2,7 +2,6 @@ package pl.michalboryczko.exercise
 
 import org.junit.Test
 import junit.framework.Assert.assertEquals
-import pl.michalboryczko.exercise.source.CryptocurrencyMapper
 
 class PairMappingTests: BaseTest() {
 

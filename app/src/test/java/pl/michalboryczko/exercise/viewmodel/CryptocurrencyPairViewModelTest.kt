@@ -10,12 +10,10 @@ import pl.michalboryczko.exercise.BaseTest
 import pl.michalboryczko.exercise.model.CryptocurrencyPair
 import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
 import pl.michalboryczko.exercise.source.repository.Repository
 import pl.michalboryczko.exercise.ui.pairs.CryptocurrencyPairViewModel
 import junit.framework.Assert.assertEquals
 import pl.michalboryczko.exercise.R
-import pl.michalboryczko.exercise.source.CryptocurrencyMapper
 
 class CryptocurrencyPairViewModelTest: BaseTest(){
 

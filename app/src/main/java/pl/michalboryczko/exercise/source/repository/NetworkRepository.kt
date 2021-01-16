@@ -3,11 +3,9 @@ package pl.michalboryczko.exercise.source.repository
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import io.reactivex.*
-import org.intellij.lang.annotations.Flow
-import pl.michalboryczko.exercise.model.exceptions.ApiException
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
 import pl.michalboryczko.exercise.model.exceptions.UnathorizedException
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
+import pl.michalboryczko.exercise.source.remote.InternetConnectivityChecker
 import timber.log.Timber
 
 open class NetworkRepository(

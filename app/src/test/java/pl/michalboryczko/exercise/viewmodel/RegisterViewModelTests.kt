@@ -9,7 +9,6 @@ import org.junit.Test
 import org.mockito.Mockito.*
 import pl.michalboryczko.exercise.BaseTest
 import pl.michalboryczko.exercise.R
-import pl.michalboryczko.exercise.model.api.call.UserCall
 import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
 import pl.michalboryczko.exercise.source.repository.UserRepository

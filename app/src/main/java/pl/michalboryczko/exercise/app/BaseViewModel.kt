@@ -6,18 +6,15 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.Disposable
 import pl.michalboryczko.exercise.R
 import pl.michalboryczko.exercise.model.base.Event
-import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.model.exceptions.ApiException
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
 import pl.michalboryczko.exercise.model.exceptions.UnathorizedException
 import pl.michalboryczko.exercise.model.exceptions.WrongPasswordException
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
-import pl.michalboryczko.exercise.source.repository.UserRepository
+import pl.michalboryczko.exercise.source.remote.InternetConnectivityChecker
 import timber.log.Timber
 
 abstract class BaseViewModel(
-        internetConnectivityChecker: InternetConnectivityChecker,
-        userRepository: UserRepository
+        internetConnectivityChecker: InternetConnectivityChecker
         ): ViewModel(), LifecycleObserver {
 
     val toastInfo: MutableLiveData<Event<String>> = MutableLiveData()
@@ -31,15 +28,6 @@ abstract class BaseViewModel(
                 internetConnectivityChecker
                         .isInternetAvailableObservable()
                         .subscribe{ internetConnectivity.value = it }
-        )
-
-        disposables.add(
-                userRepository
-                        .isUserLoggedIn()
-                        .subscribe(
-                                {loggedInStatus.value = it },
-                                {}
-                        )
         )
     }
 

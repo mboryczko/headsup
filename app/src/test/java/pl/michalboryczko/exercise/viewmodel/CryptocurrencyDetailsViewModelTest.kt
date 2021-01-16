@@ -9,13 +9,9 @@ import org.mockito.Mockito.*
 import pl.michalboryczko.exercise.BaseTest
 import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
 import pl.michalboryczko.exercise.source.repository.Repository
 import junit.framework.Assert.assertEquals
 import pl.michalboryczko.exercise.R
-import pl.michalboryczko.exercise.model.CryptocurrencyPairDetails
-import pl.michalboryczko.exercise.model.PriceStatus
-import pl.michalboryczko.exercise.source.PriceStatusChecker
 import pl.michalboryczko.exercise.ui.details.CryptocurrencyDetailsViewModel
 
 class CryptocurrencyDetailsViewModelTest: BaseTest(){

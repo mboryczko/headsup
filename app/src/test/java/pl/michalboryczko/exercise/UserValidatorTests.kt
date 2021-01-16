@@ -3,7 +3,6 @@ package pl.michalboryczko.exercise
 import androidx.lifecycle.MutableLiveData
 import org.junit.Test
 import org.junit.Assert
-import pl.michalboryczko.exercise.model.api.call.UserCall
 import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.ui.register.UserValidator
 

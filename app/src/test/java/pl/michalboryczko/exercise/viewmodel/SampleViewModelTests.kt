@@ -9,19 +9,17 @@ import org.junit.Test
 import org.mockito.Mockito.*
 import pl.michalboryczko.exercise.BaseTest
 import pl.michalboryczko.exercise.R
-import pl.michalboryczko.exercise.model.api.call.LoginCall
-import pl.michalboryczko.exercise.model.api.call.UserCall
 import pl.michalboryczko.exercise.model.base.Resource
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
 import pl.michalboryczko.exercise.source.repository.UserRepository
-import pl.michalboryczko.exercise.ui.login.LoginViewModel
+import pl.michalboryczko.exercise.ui.login.SampleViewModel
 import pl.michalboryczko.exercise.ui.register.RegisterViewModel
 
 
-class LoginViewModelTests: BaseTest() {
+class SampleViewModelTests: BaseTest() {
 
     private val repo = mock(UserRepository::class.java)
-    private val viewmodel by lazy { LoginViewModel(repo, checker, Schedulers.trampoline(), Schedulers.trampoline()) }
+    private val viewmodel by lazy { SampleViewModel(repo, checker, Schedulers.trampoline(), Schedulers.trampoline()) }
 
 
     @Test

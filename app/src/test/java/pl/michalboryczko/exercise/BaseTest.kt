@@ -7,13 +7,8 @@ import org.junit.Rule
 import org.mockito.Mockito
 import org.mockito.stubbing.OngoingStubbing
 import pl.michalboryczko.exercise.helper.RandomInputs
-import pl.michalboryczko.exercise.model.CryptocurrencyPairDetails
 import pl.michalboryczko.exercise.model.CryptocurrencyPairSimple
-import pl.michalboryczko.exercise.model.api.CurrencyTickerResponse
-import pl.michalboryczko.exercise.model.api.Params
-import pl.michalboryczko.exercise.model.api.call.LoginCall
-import pl.michalboryczko.exercise.model.api.call.UserCall
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
+import pl.michalboryczko.exercise.source.remote.InternetConnectivityChecker
 
 open class BaseTest {
     protected val checker = Mockito.mock(InternetConnectivityChecker::class.java)

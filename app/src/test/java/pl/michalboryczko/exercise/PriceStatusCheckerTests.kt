@@ -1,9 +1,7 @@
 package pl.michalboryczko.exercise
 
 import org.junit.Test
-import pl.michalboryczko.exercise.source.PriceStatusChecker
 import junit.framework.Assert.assertEquals
-import pl.michalboryczko.exercise.model.PriceStatus
 
 class PriceStatusCheckerTests {
 

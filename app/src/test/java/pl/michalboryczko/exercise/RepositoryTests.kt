@@ -7,11 +7,10 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import pl.michalboryczko.exercise.model.exceptions.NoInternetException
-import pl.michalboryczko.exercise.source.CryptocurrencyMapper
-import pl.michalboryczko.exercise.source.api.firebase.FirebaseApiService
-import pl.michalboryczko.exercise.source.api.firebase.FirestoreApiService
+import pl.michalboryczko.exercise.source.remote.firebase.FirebaseApiService
+import pl.michalboryczko.exercise.source.remote.firebase.FirestoreApiService
 import pl.michalboryczko.exercise.source.repository.RepositoryImpl
-import pl.michalboryczko.exercise.source.api.websocket.WebSocketApiService
+import pl.michalboryczko.exercise.source.remote.websocket.WebSocketApiService
 
 class RepositoryTests: BaseTest() {
 

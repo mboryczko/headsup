@@ -10,18 +10,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import pl.michalboryczko.exercise.source.api.rest.Api
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
-import pl.michalboryczko.exercise.source.api.firebase.FirebaseApiService
-import pl.michalboryczko.exercise.source.api.firebase.FirestoreApiService
+import pl.michalboryczko.exercise.BuildConfig
+import pl.michalboryczko.exercise.BuildConfig.SERVER_URL
+import pl.michalboryczko.exercise.source.remote.rest.Api
+import pl.michalboryczko.exercise.source.remote.InternetConnectivityChecker
 import java.util.concurrent.TimeUnit
 
 
 @Module
 class NetworkModule {
-
-    val restApiendpoint: String = "https://api.hitbtc.com"
-    val webSocketEndpoint = "wss://api.hitbtc.com/api/2/ws"
 
     @Provides
     fun provideGsonConverter(): Converter.Factory {
@@ -61,7 +58,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient, gsonConverterFactory: Converter.Factory, rxJava2CallAdapterFactory: RxJava2CallAdapterFactory): Retrofit {
 
         return Retrofit.Builder()
-                .baseUrl(restApiendpoint)
+                .baseUrl(SERVER_URL)
                 .client(okHttpClient)
                 .addCallAdapterFactory(rxJava2CallAdapterFactory)
                 .addConverterFactory(gsonConverterFactory)
@@ -76,16 +73,6 @@ class NetworkModule {
     @Provides
     fun api(retrofit: Retrofit): Api {
         return retrofit.create(Api::class.java)
-    }
-
-    @Provides
-    fun firebaseService(): FirebaseApiService {
-        return FirebaseApiService()
-    }
-
-    @Provides
-    fun firestoreService(): FirestoreApiService {
-        return FirestoreApiService()
     }
 
 }

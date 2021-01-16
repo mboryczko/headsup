@@ -6,51 +6,18 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import pl.michalboryczko.exercise.di.ViewModelKey
-import pl.michalboryczko.exercise.ui.activesession.ActiveSessionActivity
-import pl.michalboryczko.exercise.ui.activesession.ActiveSessionViewModel
-import pl.michalboryczko.exercise.ui.session.SessionActivity
-import pl.michalboryczko.exercise.ui.session.SessionViewModel
-import pl.michalboryczko.exercise.ui.login.LoginActivity
-import pl.michalboryczko.exercise.ui.login.LoginViewModel
-import pl.michalboryczko.exercise.ui.register.RegisterActivity
-import pl.michalboryczko.exercise.ui.register.RegisterViewModel
+import pl.michalboryczko.exercise.ui.login.SampleActivity
+import pl.michalboryczko.exercise.ui.login.SampleViewModel
 
 @Module
 internal abstract class ActivityModule {
 
     @ContributesAndroidInjector
-    internal abstract fun bindRegisterActivity(): RegisterActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun bindLoginActivity(): LoginActivity
-
-    @ContributesAndroidInjector
-    internal abstract fun bindMenuActivity(): SessionActivity
-
-
-    @ContributesAndroidInjector
-    internal abstract fun bindActiveSessionActivity(): ActiveSessionActivity
-
-
+    internal abstract fun bindLoginActivity(): SampleActivity
 
     @Binds
     @IntoMap
-    @ViewModelKey(ActiveSessionViewModel::class)
-    abstract fun bindActiveSessionViewModel(viewModel: ActiveSessionViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SessionViewModel::class)
-    abstract fun bindMenuViewModel(viewModel: SessionViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoginViewModel::class)
-    abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(RegisterViewModel::class)
-    abstract fun bindRegisterViewModel(viewModel: RegisterViewModel): ViewModel
+    @ViewModelKey(SampleViewModel::class)
+    abstract fun bindLoginViewModel(viewModel: SampleViewModel): ViewModel
 
 }

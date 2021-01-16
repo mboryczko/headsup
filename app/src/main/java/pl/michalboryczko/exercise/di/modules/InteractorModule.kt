@@ -2,11 +2,8 @@ package pl.michalboryczko.exercise.di.modules
 
 import dagger.Module
 import dagger.Provides
-import pl.michalboryczko.exercise.source.CryptocurrencyMapper
-import pl.michalboryczko.exercise.source.PriceStatusChecker
-import pl.michalboryczko.exercise.source.api.InternetConnectivityChecker
-import pl.michalboryczko.exercise.source.api.firebase.FirebaseApiService
-import pl.michalboryczko.exercise.source.api.firebase.FirestoreApiService
+import pl.michalboryczko.exercise.source.remote.InternetConnectivityChecker
+import pl.michalboryczko.exercise.source.remote.rest.Api
 import pl.michalboryczko.exercise.source.repository.*
 
 
@@ -15,22 +12,8 @@ class InteractorModule {
 
 
     @Provides
-    fun providePriceStatusChecker(): PriceStatusChecker {
-        return PriceStatusChecker()
-    }
-
-
-    @Provides
-    fun provideRepository(userRepository: UserRepository,
-                          firestoreApiService: FirestoreApiService,
-                          checker: InternetConnectivityChecker): Repository {
-        return RepositoryImpl(userRepository, firestoreApiService, checker)
-    }
-
-
-    @Provides
-    fun provideUserRepository(firebaseApiService: FirebaseApiService, checker: InternetConnectivityChecker): UserRepository {
-        return UserRepositoryImpl(firebaseApiService, checker)
+    fun provideRepository(api: Api, checker: InternetConnectivityChecker): Repository {
+        return RepositoryImpl(api, checker)
     }
 
 }
