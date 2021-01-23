@@ -1,4 +1,4 @@
-package pl.michalboryczko.exercise.source.local
+package pl.michalboryczko.exercise.model.source.local.sharedpreferences
 
 import android.content.SharedPreferences
 import com.google.gson.Gson

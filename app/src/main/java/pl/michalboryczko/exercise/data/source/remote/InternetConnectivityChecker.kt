@@ -1,4 +1,4 @@
-package pl.michalboryczko.exercise.source.remote
+package pl.michalboryczko.exercise.model.source.remote
 
 import android.content.Context
 import android.net.ConnectivityManager
